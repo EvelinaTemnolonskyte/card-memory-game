@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Kortelių žaidimas</title>
+    <meta name="keywords" content="kortelė, atmintis, žaidimas">
+    <meta name="description" content="Kortelių žaidimas, kuriame lavinamas atminties ir pastabumo įgūdis. Suderinkite poras ir pasiekite geriausią rezultatą!">
+    <meta name="author" content="Evelina Temnolonskytė">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <header>
+        <h2>Atminties žaidimas</h2>
+        <nav>
+            <button id="showRulesBtn" class="defaultButtonStyle">Taisyklės</button>
+        </nav>
+    </header>
+    <main>
+        <div id="rulesModal" class="messageModal" style="display: none;">
+            <div class="text-content">
+                <h2>Žaidimo Taisyklės</h2>
+                <p>1. Pasirinkite kortelę, kad pradėtumėte žaidimą.</p>
+                <p>2. Pasirinkus pirmąją kortelę, prasideda žaidimas ir pradedamas apsivertimų skaičiavimas.</p>
+                <p>3. Kortelės turi poras su identiškais simboliais.</p>
+                <p>4. Jūsų tikslas yra rasti visas poras</p>
+                <p>5. Po žaidimo pabaigos kortelės tvarka bus pakeista, todėl žaidimą pradėsite su nauja kortelių kombinacija.</p>
+                <p>6. Paspaudus „Pradėti iš naujo“, galėsite pradėti tą patį žaidimą iš naujo, o kortelės liks toje pačioje tvarkoje, kaip buvo žaidimo pradžioje.</p>
+                <p>7. Stenkites pasiekti geriausią rezultatą!</p>
+                <button id="closeRulesBtn" class="defaultButtonStyle">Supratau!</button>
+            </div>
+        </div>
+
+        <div id="usernameModal" style="display: none;">
+            <div class="modal-content">
+                <h2>Įveskite savo vardą: </h2>
+                <small id="required-field-msg" style="display: none;">Šitas laukas turi būti užpildytas</small>
+                <input type="text" id="usernameInput" required placeholder="Vardas" />
+                <button id="startGameBtn" class="defaultButtonStyle">Pradėti žaidimą</button>
+            </div>
+        </div>
+
+        <div id="game-container" style="display: none;">
+            <div id="game-information">
+                <p id="gamer">Žaidžia: <span id="usernameDisplay"></span> 
+                    <button id="changeUsernameBtn">&#9998;</button>
+                </p>
+                <small id="emptyUsernameChange" style="display: none;">
+                    Jūs nieko neįvedėte vardo pakeitimo lange! Vardas nepakeistas
+                </small>
+                
+                <small id="usernameChangedMsg" style="display: none;">
+                    Vardas buvo pakeistas!
+                </small>
+                
+                <small id="sameUsernameMsg" style="display: none;">
+                    Jūs įvedėte tą patį vardą! Vardas nepakeistas
+                </small>
+                
+                <p id="pair-count">Liko porų: </p>
+                <p id="flipped-counts">Apsivertimų skaičius: 0</p>
+                <p id="best-score">Rekordas apsivertimų: -</p>
+                <button id="restart" class="defaultButtonStyle">Pradėti iš naujo <span id="restartSymbol">⟳</span></button>
+            </div>
+
+            <div id="restartConfirmationModal" class="messageModal" style="display: none;">
+                <div class="restart-content text-content">
+                    <h3>Ar tikrai norite pradėti žaidimą iš naujo?</h3>
+                    <p>Jei paspausite <strong>„Taip“</strong>, einamojo žaidimo rezultatai nebus išsaugoti.</p>
+                    <div class="button-container">
+                        <button id="cancelRestartBtn" class="defaultButtonStyle">Atšaukti</button>
+                        <button id="confirmRestartBtn" class="defaultButtonStyle">Taip</button>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div id="choose-card-msg" >
+                Pasirinkite kortelę žemiau, kad pradėtumėte žaidimą!
+            </div>
+        
+
+            <div id="game-board"></div>
+
+            <div id="congratulations-message" style="display: none; text-align: center; background-color: #f0f8ff; padding: 20px; margin-top: 20px; border-radius: 8px;">
+                <h2>Sveikiname!</h2>
+                <p>Visos kortelės suskaitytos!</p>
+                <p id="final-score">Apsivertimų skaičius: </p>
+                <button  class="defaultButtonStyle" onclick="restartGame()">Žaisti dar kartą</button>
+            </div>
+            
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
