@@ -94,9 +94,11 @@ span {
     font-weight: bold;
 }
 
+
 #empty-username-change,
-#same-username-msg {
-    color: red;
+#same-username-msg, 
+#required-field-msg {
+    color: rgb(193, 36, 36);
     font-weight: bold;
     display: none;
 }
@@ -104,11 +106,6 @@ span {
 #username-changed-msg {
     color: green;
     font-weight: bold;
-    display: none;
-}
-
-#required-field-msg {
-    color: rgb(193, 36, 36);
     display: none;
 }
 
