@@ -2,13 +2,11 @@ let flipCount = 0;
 let bestScore = parseInt(sessionStorage.getItem('bestScore')) || null;
 let shuffledEmojis = [];
 let username = sessionStorage.getItem('username') || null;
-let gameEnded = false;  
-
+let gameEnded = false;
 let pairCount;
 
-const restartBtn = document.getElementById('restart'); 
+const restartBtn = document.getElementById('restart');
 const chooseCardMsg = document.getElementById('choose-card-msg');
-
 restartBtn.style.display = 'none';
 
 function shuffleArray(array) {
@@ -16,7 +14,6 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    console.log(array);
     return array;
 }
 
@@ -32,14 +29,12 @@ function createCards(reshuffle) {
 
     const gameBoard = document.getElementById("game-board");
     gameBoard.innerHTML = '';
-
     gameBoard.style.display = "flex";
     gameBoard.style.flexWrap = "wrap";
 
     shuffledEmojis.forEach(emoji => {
         const card = document.createElement('div');
-        card.classList.add('card');  
-
+        card.classList.add('card');
         card.addEventListener('click', function () {
             flipCard(card);
         });
@@ -48,11 +43,8 @@ function createCards(reshuffle) {
             <div class="card-front"></div>
             <div class="card-back">${emoji}</div>
         `;
-
         gameBoard.appendChild(card);
     });
-
-
 }
 
 let currentFlippedCards = [];
@@ -64,14 +56,11 @@ function flipCard(card) {
     }
 
     flipCount++;
-
-    const flippedCountDisplay = document.getElementById('flipped-counts');
-    flippedCountDisplay.textContent = `Apsivertimų skaičius: ${flipCount}`;
-
+    document.getElementById('flipped-counts').textContent = `Apsivertimų skaičius: ${flipCount}`;
     card.classList.add('flipped');
     currentFlippedCards.push(card);
 
-    restartBtn.style.display = 'inline-block'; 
+    restartBtn.style.display = 'inline-block';
     chooseCardMsg.style.display = 'none';
 
     if (currentFlippedCards.length === 2) {
@@ -81,7 +70,6 @@ function flipCard(card) {
 
 function checkMatch() {
     isChecking = true;
-
     const [card1, card2] = currentFlippedCards;
     const isMatch = card1.querySelector('.card-back').innerHTML === card2.querySelector('.card-back').innerHTML;
 
@@ -89,10 +77,8 @@ function checkMatch() {
         setTimeout(() => {
             card1.style.visibility = 'hidden';
             card2.style.visibility = 'hidden';
-
             currentFlippedCards = [];
             isChecking = false;
-
             pairCount -= 1;
             document.getElementById('pair-count').textContent = `Liko porų: ${pairCount}`;
 
@@ -104,7 +90,6 @@ function checkMatch() {
         setTimeout(() => {
             card1.classList.remove('flipped');
             card2.classList.remove('flipped');
-
             currentFlippedCards = [];
             isChecking = false;
         }, 500);
@@ -115,7 +100,7 @@ function showCongratulationsMessage(flipCount) {
     const messageContainer = document.getElementById('congratulations-message');
     const finalScoreElement = document.getElementById('final-score');
     const gameBoard = document.getElementById('game-board');
-    var newScore = false;
+    let newScore = false;
 
     if (bestScore === null || flipCount < bestScore) {
         bestScore = flipCount;
@@ -137,11 +122,11 @@ function showCongratulationsMessage(flipCount) {
     gameEnded = true;
 }
 
-const usernameModal = document.getElementById("usernameModal");
-const startGameBtn = document.getElementById("startGameBtn");
+const usernameModal = document.getElementById("username-modal");
+const startGameBtn = document.getElementById("start-game-btn");
 
 function startGame() {
-    const usernameInput = document.getElementById("usernameInput");
+    const usernameInput = document.getElementById("username-input");
     const usernameInputValue = usernameInput.value.trim();
 
     if (!username) {
@@ -149,10 +134,9 @@ function startGame() {
             sessionStorage.setItem('username', usernameInputValue);
             username = usernameInputValue;
             document.getElementById("game-container").style.display = "block";
-            document.getElementById('usernameDisplay').textContent = username;
+            document.getElementById('username-display').textContent = username;
             usernameModal.style.display = "none";
             createCards(true);
-
             usernameInput.classList.remove("invalid");
             document.getElementById('required-field-msg').style.display = "none";
             document.getElementById('choose-card-msg').style.display = 'block';
@@ -162,7 +146,7 @@ function startGame() {
         }
     } else {
         document.getElementById("game-container").style.display = "block";
-        document.getElementById('usernameDisplay').textContent = username;
+        document.getElementById('username-display').textContent = username;
         usernameModal.style.display = "none";
         createCards(true);
     }
@@ -174,16 +158,14 @@ function restartGame() {
     flipCount = 0;
     currentFlippedCards = [];
     isChecking = false;
-
     document.getElementById('flipped-counts').textContent = `Apsivertimų skaičius: 0`;
     document.getElementById('congratulations-message').style.display = 'none';
-
     const gameBoard = document.getElementById("game-board");
-    gameBoard.style.display = "block"; 
+    gameBoard.style.display = "block";
 
     if (gameEnded) {
         createCards(true);
-        gameEnded = false; 
+        gameEnded = false;
     } else {
         restartBtn.style.display = 'none';
         createCards(false);
@@ -191,6 +173,7 @@ function restartGame() {
 }
 
 restartBtn.addEventListener('click', () => {
+    const restartConfirmationModal = document.getElementById('restart-confirmation-modal');
     if (!gameEnded) {
         restartConfirmationModal.style.display = 'flex';
     } else {
@@ -198,17 +181,13 @@ restartBtn.addEventListener('click', () => {
     }
 });
 
-
-confirmRestartBtn.addEventListener('click', () => {
+document.getElementById('confirm-restart-btn').addEventListener('click', () => {
     restartGame();
-    restartConfirmationModal.style.display = 'none';
-    setTimeout(() => {
-        alert("Žaidimas pradėtas iš naujo.");
-    }, 300);
+    document.getElementById('restart-confirmation-modal').style.display = 'none';
 });
 
-cancelRestartBtn.addEventListener('click', () => {
-    restartConfirmationModal.style.display = 'none';
+document.getElementById('cancel-restart-btn').addEventListener('click', () => {
+    document.getElementById('restart-confirmation-modal').style.display = 'none';
 });
 
 if (bestScore !== null) {
@@ -217,66 +196,51 @@ if (bestScore !== null) {
 
 function changeUsername() {
     const newUsername = prompt("Įveskite naują vardą:");
+    if (newUsername === null) return;
 
-    if (newUsername === null) {
-        return;
-    }
+    const usernameChangedMsg = document.getElementById('username-changed-msg');
+    const sameUsernameMsg = document.getElementById('same-username-msg');
+    const requiredFieldMsg = document.getElementById('empty-username-change');
 
-    const usernameChangedMsg = document.getElementById('usernameChangedMsg');
-    const sameUsernameMsg = document.getElementById('sameUsernameMsg');
-    const usernameInput = document.getElementById('usernameInput');
-    const requiredFieldMsg = document.getElementById('emptyUsernameChange');
-
-    if (!newUsername.trim()) { 
-        usernameInput.classList.add("invalid");
+    if (!newUsername.trim()) {
         requiredFieldMsg.style.display = "block";
         usernameChangedMsg.style.display = "none";
         sameUsernameMsg.style.display = "none";
-        setTimeout(() => {
-            requiredFieldMsg.style.display = 'none';
-        }, 10000);
+        setTimeout(() => requiredFieldMsg.style.display = 'none', 10000);
     } else if (newUsername.trim() === username) {
         sameUsernameMsg.style.display = "block";
         usernameChangedMsg.style.display = "none";
         requiredFieldMsg.style.display = "none";
-        setTimeout(() => {
-            sameUsernameMsg.style.display = 'none';
-        }, 10000);
+        setTimeout(() => sameUsernameMsg.style.display = 'none', 10000);
     } else {
         sessionStorage.setItem('username', newUsername.trim());
         username = newUsername.trim();
-        document.getElementById('usernameDisplay').textContent = username;
-
+        document.getElementById('username-display').textContent = username;
         usernameChangedMsg.style.display = 'block';
         sameUsernameMsg.style.display = "none";
         requiredFieldMsg.style.display = "none";
-        setTimeout(() => {
-            usernameChangedMsg.style.display = 'none';
-        }, 10000);
+        setTimeout(() => usernameChangedMsg.style.display = 'none', 10000);
     }
 }
 
-const showRulesBtn = document.getElementById('showRulesBtn');
-const rulesModal = document.getElementById('rulesModal');
-const closeRulesBtn = document.getElementById('closeRulesBtn');
-
-showRulesBtn.addEventListener('click', () => {
-    rulesModal.style.display = 'block';
+document.getElementById('show-rules-btn').addEventListener('click', () => {
+    document.getElementById('rules-modal').style.display = 'block';
 });
 
-closeRulesBtn.addEventListener('click', () => {
-    rulesModal.style.display = 'none';
+document.getElementById('close-rules-btn').addEventListener('click', () => {
+    document.getElementById('rules-modal').style.display = 'none';
 });
 
-document.getElementById('changeUsernameBtn').addEventListener('click', changeUsername);
+document.getElementById('change-username-btn').addEventListener('click', changeUsername);
 
 window.onload = function () {
     if (username) {
         document.getElementById("game-container").style.display = "block";
         usernameModal.style.display = "none";
-        document.getElementById('usernameDisplay').textContent = username;
+        document.getElementById('username-display').textContent = username;
         createCards(true);
     } else {
         usernameModal.style.display = "block";
     }
 };
+
