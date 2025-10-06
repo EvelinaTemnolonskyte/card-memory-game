@@ -1,48 +1,56 @@
-body, html {
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+body, html {
     font-family: Arial, sans-serif;
-}
-
-/* Username change & status messages */
-#empty-username-change {
-    color: red;
-    font-weight: bold;
-    display: none;
-}
-
-#username-changed-msg {
-    color: green;
-    font-weight: bold;
-    display: none;
-}
-
-#same-username-msg {
-    color: red;
-    font-weight: bold;
-    display: none;
-}
-
-/* General layout */
-body {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
     background-color: #f5f5f5;
+}
+
+.message-modal {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding-top: 60px;
+    margin: auto;
+}
+
+.overlay-message{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    left: 0;
+    top: 0;
+}
+
+.text-content, .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
 }
 
 header {
     width: 100%;
-    text-align: center;
     padding: 20px 0;
     background-color: #0c5075;
-    color: white;
-    box-sizing: border-box;
+    color: #fff;
+    text-align: center;
 }
 
 main {
@@ -53,54 +61,28 @@ main {
     flex-grow: 1;
     width: 100%;
     padding: 20px;
-    box-sizing: border-box;
 }
 
 #game-container {
-    display: flex;
+    display: none; 
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin: auto 20px;
+    justify-content: center; 
+    align-items: center;     
     width: 100%;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    margin: auto;
 }
 
-/* Inputs and validation */
-#required-field-msg {
-    color: rgb(193, 36, 36);
-}
-
-.invalid {
-    border-color: rgb(193, 36, 36);
-}
-
-/* Game info section */
 #game-information {
     width: 100%;
     max-width: 500px;
+    margin : 20px auto;
+    padding: 15px;
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 10px;
-    margin: auto auto 20px auto;
     font-size: 1.1em;
     text-align: left;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#change-username-btn {
-    border: 1px solid #0c5075;
-    color: #0c5075;
-    cursor: pointer;
-    border-radius: 10%;
-}
-
-#change-username-btn:hover {
-    color: #0056b3;
-    transform: scale(1.05);
 }
 
 #game-information p {
@@ -112,70 +94,100 @@ span {
     font-weight: bold;
 }
 
-/* Buttons */
-.default-button-style {
-    background-color: #0c5075;
-    color: white;
+#empty-username-change,
+#same-username-msg {
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+#username-changed-msg {
+    color: green;
+    font-weight: bold;
+    display: none;
+}
+
+#required-field-msg {
+    color: rgb(193, 36, 36);
+    display: none;
+}
+
+.invalid {
+    border-color: rgb(193, 36, 36);
+}
+
+button {
+    font-family: Arial, sans-serif;
     font-size: 1em;
+    font-weight: bold;
     padding: 12px 24px;
-    border: none;
     border-radius: 5px;
+    margin: 10px auto;
+    border: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-weight: bold;
 }
 
-.default-button-style:hover {
+#change-username-btn {
+    padding: 5px;
+}
+
+button.primary {
+    background-color: #0c5075;
+    color: white;
+}
+
+button.primary:hover {
     background-color: #1a6a8c;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-#restart {
-    color: red;
+button.secondary {
     background-color: white;
+    color: #0c5075;
+    border: 1px solid #0c5075;
+}
+
+
+button.secondary:not(#change-username-btn):hover {
+    color: #0056b3;
+    transform: scale(1.05);
+}
+
+button.danger {
+    background-color: white;
+    color: red;
     border: 2px solid red;
     padding: 4px 15px;
-    font-size: 0.9em;
-    border-radius: 5px;
 }
 
-#restart-symbol {
-    font-size: 1.5em;
-    color: red;
+button.danger:hover {
+    background-color: red;
+    color: white;
 }
 
-/* Game board */
+#show-rules-btn {
+    border: 2px solid white;
+}
+
 #game-board {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px; 
     width: 100%;
     max-width: 1000px;
-    box-sizing: border-box;
     margin: 0 auto;
 }
 
-input {
-    width: 100%;
-    height: 40px;
-    font-size: 1em;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-}
-
-/* Cards */
 .card {
-    width: 150px;
-    height: 200px;
-    position: relative;
+    width: clamp(80px, 20vw, 150px); 
+    height: calc(clamp(80px, 20vw, 150px) * 1.333); 
     perspective: 1000px;
     cursor: pointer;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,11 +208,11 @@ input {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    border: 2px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-    border: 2px solid #ccc;
 }
 
 .card-back {
@@ -221,83 +233,25 @@ input {
     transform: rotateY(0deg);
 }
 
-/* Modals */
-.message-modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-}
 
-.text-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    border-radius: 10px;
-}
-
-/* Rules buttons */
-#show-rules-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #1a6a8c;
-    border: 2px solid white;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#show-rules-btn:hover {
-    background-color: #1a6a8c;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-#close-rules-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-/* Other UI */
 #choose-card-msg {
     display: none;
     text-align: center;
     font-size: 1.2em;
     color: #1a6a8c;
     font-weight: bold;
-    margin: 10px;
+    margin: 10px 0;
 }
 
-/* Restart modal */
+
 .restart-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    flex-direction: column;
     height: 12em;
     margin: auto;
-}
-
-.restart-content button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    border: 1px solid #888;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .restart-content .button-container {
@@ -307,42 +261,25 @@ input {
     width: 100%;
 }
 
-#cancel-restart-btn {
-    background-color: grey;
+input {
+    width: 100%;
+    height: 40px;
+    font-size: 1em;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
-/* 📱 Responsive design */
-@media (max-width: 900px) {
-    #game-board {
-        gap: 12px;
-    }
-}
-
-@media (max-width: 600px) {
-    #game-board {
-        gap: 8px;
-    }
-}
-
-@media (max-width: 409px) {
-    #game-board {
-        gap: 4px;
-    }
-}
 
 @media (max-width: 320px) {
-    #game-container {
-        width: 320px;
-        height: auto;
-        padding: 0;
+    
+    body, html, #game-container, #game-board {     
+        min-width: 200px;     
+        overflow-x: auto;   
     }
 
     #game-board {
-        width: 320px;
-        gap: 4px;
-    }
-
-    body {
-        width: 320px;
+        gap: 4px;           
     }
 }
