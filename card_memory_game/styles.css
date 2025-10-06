@@ -150,9 +150,9 @@ button.secondary {
 }
 
 
-button.secondary:not(#change-username-btn):hover {
-    color: #0056b3;
-    transform: scale(1.05);
+button.secondary:hover {
+    color: #1a6a8c;
+    border: 1px solid #1a6a8c;
 }
 
 button.danger {
